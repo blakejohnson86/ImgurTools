@@ -1,7 +1,6 @@
 import urllib, urllib2
 import re
 import os
-import magic
 from BeautifulSoup import BeautifulSoup
 
 DownloadLocationBase = os.path.expanduser('~/Desktop/ImgurDump/r/')
