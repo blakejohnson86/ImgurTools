@@ -16,7 +16,6 @@ ImgurSubredditURLBase = 'http://imgur.com/r/'
 
 for Subreddit in Subreddits:
     print "=== Parsing /r/" + Subreddit + " ==="
-
    
     DownloadLocation = DownloadLocationBase + Subreddit + "/"
     ImgurSubredditURL = ImgurSubredditURLBase + Subreddit
@@ -24,15 +23,13 @@ for Subreddit in Subreddits:
     if not os.path.exists(DownloadLocation):
         os.makedirs(DownloadLocation)
     
-    usock = urllib2.urlopen(ImgurSubredditURL)
-    ImgurSubbredditSource = usock.read()
-    usock.close()
+    ImgurConnection = urllib2.urlopen(ImgurSubredditURL)
+    ImgurSubbredditSource = ImgurConnection.read()
+    ImgurConnection.close()
     
-    soup = BeautifulSoup(ImgurSubbredditSource)
-    #print soup.findAll('img')
-    for Image in soup.findAll('img'):
-        #print Image['src']
-        
+    PageSource = BeautifulSoup(ImgurSubbredditSource)
+    
+    for Image in PageSource.findAll('img'):        
         if re.match('^http://i\.imgur\.com/.*b\.(jpg|gif|png)$', Image['src']):
             ImageURLName, ImageURLExt = os.path.splitext(Image['src'])
             ImageURLName = ImageURLName[:-1]
